@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Findy App Mockup</title>
+<style>
+/* CSS Reset & Cơ bản */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'SF Pro Display', sans-serif; }
+body { display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #eee; padding: 20px; }
+
+/* Khung giả lập điện thoại */
+.phone-mockup {
+    width: 500px;
+    height: 900px;
+    background-color: #111;
+    border: 15px solid #222;
+    border-radius: 40px;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Các chi tiết điện thoại giả */
+.phone-notch {
+    width: 150px;
+    height: 25px;
+    background-color: #222;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    z-index: 10;
+}
+.phone-notch::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 5px;
+    width: 60px;
+    height: 6px;
+    background-color: #333;
+    border-radius: 3px;
+}
+.phone-notch::after {
+    content: '';
+    position: absolute;
+    right: 35px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: #333;
+    border-radius: 50%;
+}
+
+.phone-button {
+    width: 3px;
+    height: 50px;
+    background-color: #111;
+    position: absolute;
+    right: -18px;
+    border-radius: 2px 0 0 2px;
+    cursor: pointer;
+}
+.phone-button.volume-up { top: 120px; }
+.phone-button.volume-down { top: 180px; }
+.phone-button.power { top: 150px; left: -18px; height: 80px; border-radius: 0 2px 2px 0; }
+
+/* Nội dung ứng dụng */
+.app-container {
+    flex: 1;
+    background-color: #f7f7f7;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Màn hình Danh sách */
+.screen { display: none; padding-top: 30px; /* Bù cho notch */ }
+.screen.active { display: block; }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: relative;
+}
+.header h1 { font-size: 20px; font-weight: 600; color: #333; position: absolute; left: 50%; transform: translateX(-50%); }
+.icon-btn { font-size: 24px; color: #555; cursor: pointer; transition: color 0.2s; padding: 5px; }
+.icon-btn:hover { color: #2ecc71; }
+
+.section-title { padding: 15px 20px 10px; font-size: 16px; font-weight: bold; color: #333; }
+
+.device-list { padding: 0 20px; }
+.device-item {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.device-item:hover { transform: translateY(-3px); box-shadow: 0 5px 12px rgba(0,0,0,0.08); }
+.device-icon-container {
+    width: 45px;
+    height: 45px;
+    background-color: #eee;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+}
+.device-icon { font-size: 22px; }
+.device-info { flex: 1; }
+.device-name { font-weight: 600; font-size: 16px; color: #333; margin-bottom: 3px; }
+.device-status { font-size: 12px; color: #888; }
+.signal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+}
+.signal-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #2ecc71;
+    border-radius: 50%;
+    margin-right: 2px;
+}
+.signal-wave {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #2ecc71;
+    margin-left: -4px;
+    animation: wave-pulse 1.5s infinite;
+}
+@keyframes wave-pulse {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Màn hình Cảnh báo */
+#alert-screen .header { justify-content: flex-start; }
+#alert-screen .header .icon-btn { margin-right: 10px; font-size: 18px; }
+#alert-screen h1 { left: 55%; transform: translateX(-50%); font-weight: bold; }
+
+.alert-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 40px 20px;
+    text-align: center;
+}
+.alert-image-container { position: relative; width: 150px; height: 150px; margin-bottom: 20px; }
+.wallet-icon-large { font-size: 120px; color: #333; }
+.alert-dot-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background-color: #ff4757;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+.alert-text-container { margin-bottom: 30px; }
+.alert-main-text { font-size: 20px; font-weight: bold; color: #333; margin-bottom: 5px; }
+.alert-sub-text { font-size: 14px; color: #888; }
+
+.action-btn {
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(46,204,113,0.3);
+    transition: background-color 0.2s, transform 0.1s;
+}
+.action-btn:hover { background-color: #27ae60; }
+.action-btn:active { transform: translateY(2px); box-shadow: 0 2px 5px rgba(46,204,113,0.2); }
+
+/* Tùy chọn Thẻ thiết bị */
+.device-item[data-target="alert-screen"] { background-color: rgba(255, 71, 87, 0.05); } /* Làm nổi bật thẻ ví */
+</style>
+</head>
+<body>
+
+<div class="phone-mockup">
+    <div class="phone-notch"></div>
+    <div class="phone-button power" onclick="alert('Bật/Tắt điện thoại')"></div>
+    <div class="phone-button volume-up" onclick="alert('Tăng âm lượng')"></div>
+    <div class="phone-button volume-down" onclick="alert('Giảm âm lượng')"></div>
+
+    <div class="app-container">
+        
+        <div class="screen active" id="list-screen">
+            <header class="header">
+                <span class="icon-btn" onclick="alert('Menu')">≡</span>
+                <h1>Findy</h1>
+                <span class="icon-btn" onclick="alert('Thêm thiết bị')">+</span>
+            </header>
+            <h2 class="section-title">Thiết bị của tôi</h2>
+            
+            <div class="device-list">
+                <div class="device-item" data-target="alert-screen">
+                    <div class="device-icon-container">
+                        <span class="device-icon">Ví</span>
+                    </div>
+                    <div class="device-info">
+                        <div class="device-name">Ví của tôi</div>
+                        <div class="device-status">Gần đây • 2 phút trước</div>
+                    </div>
+                    <div class="signal">
+                        <div class="signal-dot"></div>
+                        <div class="signal-wave"></div>
+                    </div>
+                </div>
+
+                <div class="device-item" onclick="alert('Mục: Chìa khóa')">
+                    <div class="device-icon-container">
+                        <span class="device-icon">🔑</span>
+                    </div>
+                    <div class="device-info">
+                        <div class="device-name">Chìa khóa</div>
+                        <div class="device-status">Gần đây • 1 phút trước</div>
+                    </div>
+                    <div class="signal">
+                        <div class="signal-dot"></div>
+                        <div class="signal-wave"></div>
+                    </div>
+                </div>
+
+                <div class="device-item" onclick="alert('Mục: Balo')">
+                    <div class="device-icon-container">
+                        <span class="device-icon">🎒</span>
+                    </div>
+                    <div class="device-info">
+                        <div class="device-name">Balo</div>
+                        <div class="device-status">Gần đây • 5 phút trước</div>
+                    </div>
+                    <div class="signal">
+                        <div class="signal-dot"></div>
+                        <div class="signal-wave"></div>
+                    </div>
+                </div>
+
+                <div class="device-item" onclick="alert('Mục: Tai nghe')">
+                    <div class="device-icon-container">
+                        <span class="device-icon">🎧</span>
+                    </div>
+                    <div class="device-info">
+                        <div class="device-name">Tai nghe</div>
+                        <div class="device-status">Gần đây • 10 phút trước</div>
+                    </div>
+                    <div class="signal">
+                        <div class="signal-dot"></div>
+                        <div class="signal-wave"></div>
+                    </div>
+                </div>
+            </div>
+        </div> <div class="screen" id="alert-screen">
+            <header class="header">
+                <span class="icon-btn back-btn">❮</span>
+                <h1>Ví của tôi</h1>
+            </header>
+            
+            <div class="alert-content">
+                <div class="alert-image-container">
+                    <span class="wallet-icon-large">Ví</span>
+                    <div class="alert-dot-overlay">!</div>
+                </div>
+                
+                <div class="alert-text-container">
+                    <p class="alert-main-text">Bạn đang rời xa</p>
+                    <p class="alert-sub-text">Ví của tôi</p>
+                    <p class="alert-sub-text">Khoảng cách: 12 m</p>
+                </div>
+                
+                <button class="action-btn" id="find-button">Tìm thiết bị</button>
+            </div>
+        </div> </div> </div> <script>
+// JavaScript cho tương tác
+document.addEventListener('DOMContentLoaded', () => {
+    const listScreen = document.getElementById('list-screen');
+    const alertScreen = document.getElementById('alert-screen');
+    const walletItem = document.querySelector('.device-item[data-target="alert-screen"]');
+    const backBtn = document.querySelector('#alert-screen .back-btn');
+    const findButton = document.getElementById('find-button');
+
+    // Chuyển sang màn hình cảnh báo khi nhấp vào Ví
+    walletItem.addEventListener('click', () => {
+        listScreen.classList.remove('active');
+        alertScreen.classList.add('active');
+    });
+
+    // Quay lại màn hình danh sách
+    backBtn.addEventListener('click', () => {
+        alertScreen.classList.remove('active');
+        listScreen.classList.add('active');
+    });
+
+    // Tương tác nút 'Tìm thiết bị'
+    findButton.addEventListener('click', () => {
+        alert('Đang phát tín hiệu tìm ví! Vui lòng kiểm tra tín hiệu và âm thanh từ thiết bị ví.');
+    });
+});
+</script>
+
+</body>
+</html>
