@@ -60,7 +60,7 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
 .dnd-option:active { background: #f9f9f9; }
 .dnd-cancel { padding: 15px; text-align: center; color: #e74c3c; font-weight: bold; cursor: pointer; }
 
-/* CSS RADAR BOX */
+/* CSS RADAR BOX & CHỌN THIẾT BỊ */
 .radar-box { background: #fff; border-radius: 15px; padding: 20px; margin: 15px 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
 .distance-display { font-size: 34px; font-weight: bold; color: #0984e3; margin: 12px 0; font-family: monospace; transition: color 0.3s; }
 .btn-trigger-alarm { background-color: #bdc3c7; color: white; border: none; padding: 14px 20px; border-radius: 25px; font-weight: bold; cursor: not-allowed; box-shadow: none; transition: 0.2s; width: 100%; font-size: 14px; margin-top: 10px;}
@@ -95,9 +95,14 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
         <div id="screen-devices" class="screen active">
             <div class="header"><h1>Thiết bị của tôi</h1></div>
             <div class="device-list" id="main-device-list">
+                <div class="device-item" data-id=""><div class="device-icon">💻</div><div class="device-info"><div class="device-name">Laptop Lenovo Legion</div><div class="device-status">Cách 2m • An toàn</div></div></div>
                 <div class="device-item" data-id=""><div class="device-icon">🪪</div><div class="device-info"><div class="device-name">Ví da thật</div><div class="device-status">Gần đây • An toàn</div></div></div>
                 <div class="device-item" data-id=""><div class="device-icon">🔑</div><div class="device-info"><div class="device-name">Chìa khóa xe máy</div><div class="device-status">Cách 5m • An toàn</div></div></div>
                 <div class="device-item" data-id=""><div class="device-icon">🎒</div><div class="device-info"><div class="device-name">Balo đi học</div><div class="device-status">Cách 12m • Đang ở nhà</div></div></div>
+                <div class="device-item" data-id=""><div class="device-icon">🏐</div><div class="device-info"><div class="device-name">Túi bóng chuyền</div><div class="device-status">Đang ở trường VKU</div></div></div>
+                <div class="device-item" data-id=""><div class="device-icon">🧴</div><div class="device-info"><div class="device-name">Hộp đồ Skincare</div><div class="device-status">Gần đây • An toàn</div></div></div>
+                <div class="device-item" data-id=""><div class="device-icon">🎧</div><div class="device-info"><div class="device-name">Tai nghe Không dây</div><div class="device-status">Đã ngắt kết nối 2h trước</div></div></div>
+                <div class="device-item" data-id=""><div class="device-icon">🐶</div><div class="device-info"><div class="device-name">Vòng cổ Cún cưng</div><div class="device-status">Cách 20m • Chú ý</div></div></div>
             </div>
         </div>
 
@@ -143,7 +148,12 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
             <div class="header"><h1>Thông báo</h1></div>
             <div class="menu-list">
                 <div class="menu-item" style="border-left-color: #e74c3c;"><span class="menu-icon">⚠️</span><span class="menu-text">Cảnh báo bỏ quên <span class="menu-sub">Bạn đang rời xa "Ví da thật" (15m) • Vừa xong</span></span></div>
-                <div class="menu-item" style="border-left-color: #f39c12;"><span class="menu-icon">🔋</span><span class="menu-text">Pin yếu <span class="menu-sub">Tag "Chìa khóa xe máy" còn 10% • 10 phút trước</span></span></div>
+                <div class="menu-item" style="border-left-color: #3498db;"><span class="menu-icon">📍</span><span class="menu-text">Cập nhật vị trí <span class="menu-sub">"Túi bóng chuyền" đang ở Sân trường VKU • 30 phút trước</span></span></div>
+                <div class="menu-item" style="border-left-color: #2ecc71;"><span class="menu-icon">✅</span><span class="menu-text">Đã kết nối lại <span class="menu-sub">"Laptop Lenovo Legion" đã vào vùng phủ sóng • 1 giờ trước</span></span></div>
+                <div class="menu-item" style="border-left-color: #f39c12;"><span class="menu-icon">🔋</span><span class="menu-text">Pin yếu <span class="menu-sub">Tag "Hộp đồ Skincare" còn 15% • Hôm qua</span></span></div>
+                <div class="menu-item" style="border-left-color: #e74c3c;"><span class="menu-icon">🚪</span><span class="menu-text">Rời vùng an toàn <span class="menu-sub">"Chìa khóa xe máy" đã rời khỏi nhà • 2 ngày trước</span></span></div>
+                <div class="menu-item" style="border-left-color: #9b59b6;"><span class="menu-icon">🆕</span><span class="menu-text">Thiết bị mới <span class="menu-sub">Đã thêm "Vali du lịch" vào danh sách • 3 ngày trước</span></span></div>
+                <div class="menu-item" style="border-left-color: #95a5a6;"><span class="menu-icon">⚙️</span><span class="menu-text">Hệ thống <span class="menu-sub">Cập nhật phần mềm cho các tag Findy thành công • 1 tuần trước</span></span></div>
             </div>
         </div>
 
@@ -224,7 +234,7 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
     const dndModal = document.getElementById('dnd-modal');
     const toggleNotif = document.getElementById('toggle-notif');
     const dndStatusText = document.getElementById('dnd-status-text');
-    let currentViewedDeviceId = null; // Biến lưu ID thiết bị đang mở xem
+    let currentViewedDeviceId = null;
 
     function openDeviceDetail(e) {
         const item = e.target.closest('.device-item');
@@ -237,7 +247,6 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
             document.getElementById('detail-status').innerText = statusNode ? statusNode.innerText : "";
             document.getElementById('detail-status').style.color = statusNode ? statusNode.style.color : '#888';
             
-            // Ẩn/hiện nút ngắt kết nối dựa vào việc nó là thiết bị thực tế đang chạy hay thiết bị ảo
             const btnDisconnect = document.getElementById('btn-manual-disconnect');
             if (currentViewedDeviceId && activeDevices.has(currentViewedDeviceId)) {
                 btnDisconnect.style.display = 'flex';
@@ -252,28 +261,22 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
     document.getElementById('main-device-list').addEventListener('click', openDeviceDetail);
     document.getElementById('tracked-device-list').addEventListener('click', openDeviceDetail);
 
-    // Xử lý nút Ngắt Kết Nối Thủ Công
     document.getElementById('btn-manual-disconnect').addEventListener('click', () => {
         if (currentViewedDeviceId && activeDevices.has(currentViewedDeviceId)) {
             const devData = activeDevices.get(currentViewedDeviceId);
-
-            // Cờ hiệu: Đây là ngắt chủ động, KHÔNG rú còi báo động
             devData.isManualDisconnect = true;
 
-            // Ngắt kết nối phần cứng Bluetooth
             if (devData.device.gatt.connected) {
                 devData.device.gatt.disconnect();
             }
 
-            // Dọn dẹp giao diện (xóa thẻ) và dừng đếm Ping
             clearInterval(devData.pollInterval);
             document.querySelectorAll(`.ble-device-${currentViewedDeviceId}`).forEach(el => el.remove());
             activeDevices.delete(currentViewedDeviceId);
 
-            updateRadarDevicePicker(); // Cập nhật lại dropdown bên radar
+            updateRadarDevicePicker(); 
             alert("Đã ngắt kết nối an toàn.");
 
-            // Tự động quay về tab thiết bị
             document.querySelector('.nav-item[data-target="screen-devices"]').click();
         }
     });
@@ -467,7 +470,6 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
                 const devData = activeDevices.get(safeId);
                 if (!devData || devData.isDisconnectHandled) return; 
 
-                // Nếu là ngắt thủ công từ nút, dừng xử lý cảnh báo tại đây
                 if (devData.isManualDisconnect) return;
 
                 devData.isDisconnectHandled = true; clearInterval(devData.pollInterval);
@@ -529,7 +531,7 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
             updateRadarDevicePicker();
 
         } catch (error) {
-            btnConnectBle.innerHTML = '📡 Kết nối thêm thiết bị khác';
+            btnConnectBle.innerHTML = '📡 Kết nối thiết bị Bluetooth';
         }
     });
 </script>
