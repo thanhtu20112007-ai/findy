@@ -354,7 +354,7 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
     function playManualSound() { initAudioContext(); if (!manualSirenInterval) manualSirenInterval = setInterval(createSoundTick, 500); }
     function stopManualSound() { if (manualSirenInterval) clearInterval(manualSirenInterval); manualSirenInterval = null; }
 
-    // --- 4. RADAR & CHỌN THIẾT BỊ ---
+    // --- 4. RADAR & CHỌN THIẾT BỊ ĐÃ FIX STATE ---
     const btnForceAlarm = document.getElementById('btn-force-alarm');
     const btnStopForceAlarm = document.getElementById('btn-stop-force-alarm');
     const distanceMeter = document.getElementById('distance-meter');
@@ -362,7 +362,9 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
     const radarPicker = document.getElementById('radar-device-picker');
 
     function updateRadarDevicePicker() {
+        const previousSelection = radarPicker.value; // Khắc phục lỗi reset: Lưu trí nhớ lựa chọn cũ
         radarPicker.innerHTML = '<option value="">-- Chưa chọn thiết bị --</option>';
+        
         activeDevices.forEach((devData, id) => {
             if (devData.device.gatt.connected && !devData.isDisconnectHandled) {
                 const opt = document.createElement('option'); opt.value = id;
@@ -370,6 +372,12 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
                 radarPicker.appendChild(opt);
             }
         });
+
+        // Phục hồi lại tùy chọn nếu thiết bị đó vẫn tồn tại trong danh sách
+        if (previousSelection && Array.from(radarPicker.options).some(opt => opt.value === previousSelection)) {
+            radarPicker.value = previousSelection;
+        }
+
         checkRadarButtonState();
     }
 
@@ -381,7 +389,9 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
         } else {
             btnForceAlarm.disabled = false; btnForceAlarm.style.backgroundColor = "#e74c3c";
             btnForceAlarm.style.cursor = "pointer"; btnForceAlarm.style.boxShadow = "0 4px 10px rgba(231,76,60,0.3)";
-            distanceMeter.innerText = "Đang bắt sóng..."; distanceMeter.style.color = "#888";
+            if (distanceMeter.innerText === "-- m") {
+                distanceMeter.innerText = "Đang bắt sóng..."; distanceMeter.style.color = "#888";
+            }
         }
     }
 
@@ -452,7 +462,7 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
                 if (chars.length > 0) pingChar = chars[0]; 
             } catch(e) {}
 
-            btnConnectBle.innerHTML = `📡 Kết nối thêm thiết bị khác`;
+            btnConnectBle.innerHTML = `📡 Kết nối thêm thiết bị Bluetooth`;
 
             const deviceHTML = `
                 <div class="device-item dynamic-ble-tag ble-device-${safeId}" data-id="${safeId}" style="border: 2px solid #2ecc71; background: #f0fdf4;">
