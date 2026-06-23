@@ -39,13 +39,11 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
 .device-status, .menu-sub { font-size: 11px; color: #888; margin-top: 3px; transition: 0.3s; display: block; font-weight: normal; line-height: 1.4;}
 .menu-arrow { color: #ccc; font-size: 18px; margin-left: 10px;}
 
-/* CSS BLUETOOTH, TÌM & NÚT DỪNG */
+/* CSS BLUETOOTH & TÌM */
 .btn-bluetooth { width: 100%; background-color: #0984e3; color: white; border: none; padding: 15px; border-radius: 12px; font-size: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(9, 132, 227, 0.3); margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s; }
 .btn-secondary { background-color: #fff; color: #2ecc71; border: 2px dashed #2ecc71; box-shadow: none; margin-top: 10px; }
 #btn-stop-alarm { display: none; background-color: #e74c3c; box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3); animation: pulseRed 1s infinite; margin-top: -10px; margin-bottom: 20px; }
 @keyframes pulseRed { 0% { transform: scale(1); } 50% { transform: scale(1.02); box-shadow: 0 0 15px rgba(231, 76, 60, 0.6); } 100% { transform: scale(1); } }
-.radar-animation { display: none; width: 50px; height: 50px; border-radius: 50%; border: 2px solid #0984e3; margin: 20px auto; animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite; }
-@keyframes ping { 75%, 100% { transform: scale(2); opacity: 0; } }
 
 /* CSS TOGGLE & DROPDOWN */
 .toggle-switch { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
@@ -69,12 +67,6 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
 .btn-trigger-alarm { background-color: #e74c3c; color: white; border: none; padding: 14px 20px; border-radius: 25px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(231,76,60,0.3); transition: 0.2s; width: 100%; font-size: 14px; margin-top: 5px; margin-bottom: 10px;}
 .btn-trigger-alarm:active { transform: scale(0.95); }
 .btn-trigger-alarm:disabled { background-color: #bdc3c7 !important; cursor: not-allowed !important; box-shadow: none !important; }
-
-/* CSS TÀI KHOẢN */
-.auth-form { padding: 20px; display: flex; flex-direction: column; gap: 15px; }
-.auth-input { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; }
-.auth-btn { width: 100%; padding: 12px; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; }
-.btn-login { background-color: #2ecc71; color: white; margin-bottom: 10px; }
 
 /* BOTTOM NAV */
 .bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 12px 0 20px 0; border-top: 1px solid #eaeaea; z-index: 50; }
@@ -162,12 +154,10 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
                 <p style="text-align:center; color:#888; font-size:13px; margin-bottom: 20px;">Mở Bluetooth để kết nối cảnh báo cho nhiều thiết bị.</p>
                 <button id="btn-connect-ble" class="btn-bluetooth"><span>📡 Kết nối thiết bị Bluetooth</span></button>
                 <button id="btn-stop-alarm" class="btn-bluetooth"><span>🛑 DỪNG BÁO ĐỘNG</span></button>
-                <div id="radar" class="radar-animation"></div>
                 
                 <h3 style="font-size:15px; color:#555; margin-bottom:10px;">Thiết bị đang theo dõi sát:</h3>
                 <div class="device-list" style="padding: 0;" id="tracked-device-list">
-                    <div class="device-item" data-demo-id="demo-3"><div class="device-icon">🔑</div><div class="device-info"><div class="device-name">Chìa khóa nhà</div><div class="device-status" style="color:#d35400;">Đang quét vị trí...</div></div></div>
-                </div>
+                    </div>
             </div>
         </div>
 
@@ -178,8 +168,6 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
                 <div class="menu-item" style="border-left-color: #3498db;"><span class="menu-icon">📍</span><span class="menu-text">Cập nhật vị trí <span class="menu-sub">"Túi bóng chuyền" đang ở Sân trường VKU • 30 phút trước</span></span></div>
                 <div class="menu-item" style="border-left-color: #2ecc71;"><span class="menu-icon">✅</span><span class="menu-text">Đã kết nối lại <span class="menu-sub">"Laptop Lenovo Legion" đã vào vùng phủ sóng • 1 giờ trước</span></span></div>
                 <div class="menu-item" style="border-left-color: #f39c12;"><span class="menu-icon">🔋</span><span class="menu-text">Pin yếu <span class="menu-sub">Tag "Hộp đồ Skincare" còn 15% • Hôm qua</span></span></div>
-                <div class="menu-item" style="border-left-color: #e74c3c;"><span class="menu-icon">🚪</span><span class="menu-text">Rời vùng an toàn <span class="menu-sub">"Chìa khóa xe máy" đã rời khỏi nhà • 2 ngày trước</span></span></div>
-                <div class="menu-item" style="border-left-color: #9b59b6;"><span class="menu-icon">🆕</span><span class="menu-text">Thiết bị mới <span class="menu-sub">Đã thêm "Vali du lịch" vào danh sách • 3 ngày trước</span></span></div>
             </div>
         </div>
 
@@ -195,26 +183,15 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
                     </select>
                 </div>
                 <div class="menu-item" style="cursor: default;"><span class="menu-icon">⚡</span><span class="menu-text">Chế độ tiết kiệm pin <span class="menu-sub">Giảm tần suất cập nhật vị trí</span></span><label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-                <div class="menu-item" id="open-account-btn"><span class="menu-icon">👤</span><span class="menu-text">Tài khoản & Thiết bị <span class="menu-sub">Xin chào, Thanh Tú</span></span><span class="menu-arrow">›</span></div>
             </div>
         </div>
-
+        
         <div id="screen-safezone" class="screen">
             <div class="header"><span class="back-btn" id="back-from-safezone">❮</span><h1>Vùng an toàn</h1></div>
             <div style="padding: 10px 20px; text-align: center; color: #7f8c8d; font-size: 13px;">Tạm tắt còi báo động khi bạn kết nối với các Wi-Fi này.</div>
             <div class="menu-list">
                 <div class="menu-item" style="cursor: default;"><span class="menu-icon" style="color: #3498db;">🏠</span><span class="menu-text">Wi-Fi Ở Nhà <span class="menu-sub">Home_Network_5G</span></span><label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-                <div class="menu-item" style="cursor: default;"><span class="menu-icon" style="color: #e67e22;">🏫</span><span class="menu-text">Trường VKU <span class="menu-sub">VKU_Student_Wifi</span></span><label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label></div>
             </div>
-        </div>
-
-        <div id="screen-account" class="screen">
-            <div class="header"><span class="back-btn" id="back-from-account">❮</span><h1>Tài khoản</h1></div>
-            <div style="text-align: center; margin-top: 20px;"><div style="font-size: 50px;">👤</div><h3 style="color: #333; margin-top: 10px;">Chào mừng đến Findy</h3></div>
-            <form class="auth-form" onsubmit="event.preventDefault(); alert('Chức năng đang phát triển!');">
-                <input type="text" class="auth-input" placeholder="Tên đăng nhập" required><input type="password" class="auth-input" placeholder="Mật khẩu" required>
-                <button type="submit" class="auth-btn btn-login">Đăng nhập</button>
-            </form>
         </div>
 
     </div>
@@ -228,6 +205,9 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
 </div>
 
 <script>
+    // --- KHỞI TẠO ĐỒNG BỘ HAI DANH SÁCH THIẾT BỊ ---
+    document.getElementById('tracked-device-list').innerHTML = document.getElementById('main-device-list').innerHTML;
+
     // --- 0. TÍNH NĂNG TÌM KIẾM THIẾT BỊ (LIVE SEARCH) ---
     document.getElementById('device-search-input').addEventListener('input', function(e) {
         const searchTerm = e.target.value.toLowerCase();
@@ -260,12 +240,10 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
         });
     });
 
-    document.getElementById('open-account-btn').addEventListener('click', () => { document.getElementById('screen-settings').classList.remove('active'); document.getElementById('screen-account').classList.add('active'); });
-    document.getElementById('back-from-account').addEventListener('click', () => { document.getElementById('screen-account').classList.remove('active'); document.getElementById('screen-settings').classList.add('active'); });
     document.getElementById('open-safezone-btn').addEventListener('click', () => { document.getElementById('screen-settings').classList.remove('active'); document.getElementById('screen-safezone').classList.add('active'); });
     document.getElementById('back-from-safezone').addEventListener('click', () => { document.getElementById('screen-safezone').classList.remove('active'); document.getElementById('screen-settings').classList.add('active'); });
 
-    // --- 2. HỆ THỐNG ÂM THANH ĐA LUỒNG ĐỘC LẬP ---
+    // --- 2. HỆ THỐNG ÂM THANH ĐA LUỒNG ---
     let audioCtx, masterGain;
     let disconnectSirenInterval = null; 
     let manualSirenInterval = null;     
@@ -303,11 +281,10 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
 
     function playDisconnectSound() { initAudioContext(); if (!disconnectSirenInterval) disconnectSirenInterval = setInterval(createSoundTick, 500); }
     function stopDisconnectSound() { if (disconnectSirenInterval) clearInterval(disconnectSirenInterval); disconnectSirenInterval = null; }
-    
     function playManualSound() { initAudioContext(); if (!manualSirenInterval) manualSirenInterval = setInterval(createSoundTick, 500); }
     function stopManualSound() { if (manualSirenInterval) clearInterval(manualSirenInterval); manualSirenInterval = null; }
 
-    // --- 3. CHI TIẾT THIẾT BỊ, DND & ĐIỀU KHIỂN ÂM THANH TRỰC TIẾP ---
+    // --- 3. CHI TIẾT THIẾT BỊ, DND & ĐIỀU KHIỂN ---
     const screenDetail = document.getElementById('screen-device-detail');
     const dndModal = document.getElementById('dnd-modal');
     const toggleNotif = document.getElementById('toggle-notif');
@@ -329,22 +306,22 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
 
             document.getElementById('detail-title').innerText = item.querySelector('.device-name').innerText;
             document.getElementById('detail-icon').innerHTML = item.querySelector('.device-icon').innerHTML;
-            const statusNode = item.querySelector('.device-status') || item.querySelector('.disconnected-timer');
+            const statusNode = item.querySelector('.device-status') || item.querySelector('.disconnected-timer') || item.querySelector('.tracking-status');
             document.getElementById('detail-status').innerText = statusNode ? statusNode.innerText : "";
-            document.getElementById('detail-status').style.color = statusNode ? statusNode.style.color : '#888';
+            document.getElementById('detail-status').style.color = statusNode ? (statusNode.style.color || '#888') : '#888';
             
             stopManualSound();
             btnDetailPlaySound.style.display = 'block';
             btnDetailStopSound.style.display = 'none';
 
+            // Xử lý UI nút Ngắt kết nối tùy vào loại thiết bị
+            btnManualDisconnect.style.display = 'flex';
             if (currentViewedRealId && activeDevices.has(currentViewedRealId)) {
-                btnManualDisconnect.style.display = 'flex';
                 btnManualDisconnect.style.background = '#ffebee'; btnManualDisconnect.style.borderColor = '#ffcdd2';
                 txtDisconnectToggle.innerText = "🔌 Ngắt kết nối thiết bị này"; txtDisconnectToggle.style.color = "#e74c3c";
                 btnDetailPlaySound.disabled = false; btnDetailPlaySound.style.backgroundColor = '#e74c3c'; btnDetailPlaySound.style.cursor = 'pointer';
             } 
             else if (currentViewedDemoId) {
-                btnManualDisconnect.style.display = 'flex';
                 const isDisconnected = item.classList.contains('demo-disconnected');
                 if (isDisconnected) {
                     btnManualDisconnect.style.background = '#e8f8f5'; btnManualDisconnect.style.borderColor = '#c8e6c9';
@@ -356,7 +333,9 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
                     btnDetailPlaySound.disabled = false; btnDetailPlaySound.style.backgroundColor = '#e74c3c'; btnDetailPlaySound.style.cursor = 'pointer';
                 }
             } else {
-                btnManualDisconnect.style.display = 'none';
+                // Đây là thiết bị thật bị ngắt kết nối (biến thành demo timer)
+                btnManualDisconnect.style.background = '#e8f8f5'; btnManualDisconnect.style.borderColor = '#c8e6c9';
+                txtDisconnectToggle.innerText = "🔗 Kết nối với thiết bị này"; txtDisconnectToggle.style.color = "#2ecc71";
                 btnDetailPlaySound.disabled = true; btnDetailPlaySound.style.backgroundColor = '#bdc3c7'; btnDetailPlaySound.style.cursor = 'not-allowed';
             }
 
@@ -364,38 +343,52 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
             screenDetail.classList.add('active');
         }
     }
+    
+    // Gắn sự kiện click cho cả 2 danh sách
     document.getElementById('main-device-list').addEventListener('click', openDeviceDetail);
     document.getElementById('tracked-device-list').addEventListener('click', openDeviceDetail);
 
     btnDetailPlaySound.addEventListener('click', () => {
         playManualSound();
-        btnDetailPlaySound.style.display = 'none';
-        btnDetailStopSound.style.display = 'block';
+        btnDetailPlaySound.style.display = 'none'; btnDetailStopSound.style.display = 'block';
     });
     btnDetailStopSound.addEventListener('click', () => {
         stopManualSound();
-        btnDetailStopSound.style.display = 'none';
-        btnDetailPlaySound.style.display = 'block';
+        btnDetailStopSound.style.display = 'none'; btnDetailPlaySound.style.display = 'block';
     });
 
     btnManualDisconnect.addEventListener('click', () => {
+        // NGẮT THIẾT BỊ THẬT -> BIẾN THÀNH THIẾT BỊ ĐẾM GIỜ
         if (currentViewedRealId && activeDevices.has(currentViewedRealId)) {
             const devData = activeDevices.get(currentViewedRealId);
             devData.isManualDisconnect = true;
             if (devData.device.gatt.connected) devData.device.gatt.disconnect();
-            
             clearInterval(devData.pollInterval);
-            document.querySelectorAll(`.ble-device-${currentViewedRealId}`).forEach(el => el.remove());
-            activeDevices.delete(currentViewedRealId);
             
+            // QuerySelectorAll tác động lên cả 2 tab cùng lúc!
+            document.querySelectorAll(`.ble-device-${currentViewedRealId}`).forEach(el => {
+                el.classList.add('demo-disconnected'); 
+                el.style.border = '1px solid #81ecec'; el.style.background = '#fff';
+                el.querySelector('.device-icon').style.background = '#f0f0f0'; el.querySelector('.device-icon').style.color = '#333';
+                const statusEl = el.querySelector('.tracking-status') || el.querySelector('.device-status');
+                if(statusEl) {
+                    statusEl.className = 'disconnected-timer'; statusEl.style.color = '#00cec9';
+                    statusEl.setAttribute('data-disconnect-time', Date.now().toString());
+                    statusEl.innerText = "Đã ngắt kết nối vừa xong";
+                }
+                // Biến ID thật thành ID ảo để nó nhận lệnh kết nối lại như Demo
+                el.setAttribute('data-demo-id', 'demo-real-' + currentViewedRealId);
+                el.removeAttribute('data-id');
+            });
+            activeDevices.delete(currentViewedRealId);
             alert("Đã ngắt kết nối an toàn.");
             document.getElementById('back-from-detail').click();
         } 
+        // ĐIỀU KHIỂN THIẾT BỊ ẢO (HOẶC THIẾT BỊ THẬT ĐÃ BỊ NGẮT TRƯỚC ĐÓ)
         else if (currentViewedDemoId) {
             const items = document.querySelectorAll(`.device-item[data-demo-id="${currentViewedDemoId}"]`);
             if (items.length > 0) {
-                const item = items[0]; 
-                const isDisconnected = item.classList.contains('demo-disconnected');
+                const isDisconnected = items[0].classList.contains('demo-disconnected');
                 
                 if (isDisconnected) {
                     items.forEach(el => {
@@ -454,6 +447,7 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
         else { dndStatusText.innerText = "Cho đến khi chọn lại"; dndStatusText.style.color = '#f39c12'; }
     });
 
+    // Cập nhật đồng hồ mọi nơi
     setInterval(() => {
         document.querySelectorAll('.disconnected-timer').forEach(el => {
             const dt = parseInt(el.getAttribute('data-disconnect-time'));
@@ -464,7 +458,7 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
         });
     }, 10000);
 
-    // --- 4. BLUETOOTH CORE LOGIC ---
+    // --- 4. BLUETOOTH CORE LOGIC TRÁNH NHÂN BẢN & ĐỒNG BỘ 2 TAB ---
     const activeDevices = new Map(); 
     const btnConnectBle = document.getElementById('btn-connect-ble');
     const btnStopAlarm = document.getElementById('btn-stop-alarm');
@@ -474,6 +468,7 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
         activeDevices.forEach((devData, id) => {
             if (!devData.device.gatt.connected || devData.isDisconnectHandled) {
                 document.querySelectorAll(`.ble-device-${id}`).forEach(el => {
+                    el.classList.add('demo-disconnected');
                     el.style.border = '1px solid #81ecec'; el.style.background = '#fff';
                     el.querySelector('.device-icon').style.background = '#f0f0f0'; el.querySelector('.device-icon').style.color = '#333';
                     const statusEl = el.querySelector('.tracking-status');
@@ -482,6 +477,8 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
                         statusEl.style.color = '#00cec9'; statusEl.setAttribute('data-disconnect-time', Date.now().toString());
                         statusEl.innerText = "Đã ngắt kết nối vừa xong";
                     }
+                    el.setAttribute('data-demo-id', 'demo-real-' + id);
+                    el.removeAttribute('data-id');
                 });
                 clearInterval(devData.pollInterval); activeDevices.delete(id);
             }
@@ -495,13 +492,28 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
 
         try {
             const device = await navigator.bluetooth.requestDevice({ acceptAllDevices: true, optionalServices: ['generic_access'] });
-            const safeId = device.id.replace(/[^a-zA-Z0-9]/g, '') || Math.random().toString(36).substr(2, 9);
             
+            // XÓA MỌI THẺ CŨ (TRONG CẢ 2 TAB) TRƯỚC KHI TẠO THẺ MỚI DỰA VÀO TÊN THIẾT BỊ
+            const deviceName = device.name || 'Thiết bị Bluetooth';
+            document.querySelectorAll('.device-item').forEach(el => {
+                const nameEl = el.querySelector('.device-name');
+                if (nameEl && nameEl.innerText === deviceName) {
+                    const oldClass = Array.from(el.classList).find(c => c.startsWith('ble-device-'));
+                    if (oldClass) {
+                        const oldId = oldClass.replace('ble-device-', '');
+                        if (activeDevices.has(oldId)) {
+                            clearInterval(activeDevices.get(oldId).pollInterval);
+                            activeDevices.delete(oldId);
+                        }
+                    }
+                    el.remove();
+                }
+            });
+
+            const safeId = device.id.replace(/[^a-zA-Z0-9]/g, '') || Math.random().toString(36).substr(2, 9);
             if (activeDevices.has(safeId)) return alert(`Đang theo dõi thiết bị này rồi!`);
 
-            document.querySelectorAll(`.ble-device-${safeId}`).forEach(el => el.remove());
             const server = await device.gatt.connect();
-            
             let pingChar = null;
             try {
                 const service = await server.getPrimaryService('generic_access');
@@ -511,11 +523,12 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
 
             btnConnectBle.innerHTML = `📡 Kết nối thiết bị Bluetooth`;
 
+            // TẠO THẺ MỚI VÀ CHÈN VÀO CẢ 2 DANH SÁCH (THIẾT BỊ VÀ TÌM KIẾM)
             const deviceHTML = `
                 <div class="device-item dynamic-ble-tag ble-device-${safeId}" data-id="${safeId}" style="border: 2px solid #2ecc71; background: #f0fdf4;">
                     <div class="device-icon" style="background:#2ecc71; color:white;">📱</div>
                     <div class="device-info">
-                        <div class="device-name">${device.name || 'Thiết bị Bluetooth'}</div>
+                        <div class="device-name">${deviceName}</div>
                         <div class="device-status tracking-status" style="color:#27ae60; font-weight: bold;">Đang kết nối BLE & Theo dõi</div>
                     </div>
                 </div>
@@ -526,13 +539,14 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
             const handleDisconnect = () => {
                 const devData = activeDevices.get(safeId);
                 if (!devData || devData.isDisconnectHandled) return; 
-
                 if (devData.isManualDisconnect) return;
 
                 devData.isDisconnectHandled = true; clearInterval(devData.pollInterval);
                 
+                // MẤT KẾT NỐI: ĐỔI GIAO DIỆN Ở CẢ 2 TAB
                 if (!document.getElementById('toggle-notif').checked) {
                     document.querySelectorAll(`.ble-device-${safeId}`).forEach(el => {
+                        el.classList.add('demo-disconnected');
                         el.style.border = '1px solid #81ecec'; el.style.background = '#fff';
                         el.querySelector('.device-icon').style.background = '#f0f0f0'; el.querySelector('.device-icon').style.color = '#333';
                         const statusEl = el.querySelector('.tracking-status');
@@ -541,14 +555,19 @@ body { display: flex; justify-content: center; align-items: center; min-height: 
                             statusEl.style.color = '#00cec9'; statusEl.setAttribute('data-disconnect-time', Date.now().toString());
                             statusEl.innerText = "Đã ngắt kết nối vừa xong";
                         }
+                        el.setAttribute('data-demo-id', 'demo-real-' + safeId);
+                        el.removeAttribute('data-id');
                     });
                     activeDevices.delete(safeId); return;
                 }
 
                 document.querySelectorAll(`.ble-device-${safeId}`).forEach(el => { 
+                    el.classList.add('demo-disconnected');
                     el.style.border = '2px solid #e74c3c'; el.style.background = '#fff0f0'; 
                     el.querySelector('.device-icon').style.background = '#e74c3c'; el.querySelector('.device-icon').style.color = '#fff'; 
                     el.querySelector('.tracking-status').innerHTML = 'ĐÃ NGẮT KẾT NỐI!'; el.querySelector('.tracking-status').style.color = '#e74c3c';
+                    el.setAttribute('data-demo-id', 'demo-real-' + safeId);
+                    el.removeAttribute('data-id');
                 });
 
                 playDisconnectSound();
